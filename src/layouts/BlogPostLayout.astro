@@ -1,0 +1,70 @@
+---
+import MainLayout from "./MainLayout.astro";
+import { Image } from "@astrojs/image/components";
+import { slugify, formatDate } from "../js/utils";
+import CategoryCloud from "../components/CategoryCloud.astro";
+import RelatedPosts from "../components/RelatedPosts.astro";
+
+const { frontmatter } = Astro.props;
+
+const { title, description, date, category, author, image, robots } =
+  frontmatter;
+---
+
+<MainLayout
+  title={title}
+  description={description}
+  image={image}
+  frontmatter={frontmatter}
+  robots={robots}
+>
+  <section>
+    <header
+      class="flex flex-col items-center justify-center space-y-4 p-16 text-center"
+    >
+      <div class="space-y-2">
+        <small>
+          <a
+            href={`/category/${slugify(category)}`}
+            class="max-w-fit rounded-md bg-blue-900 p-2 text-lg text-white"
+            >{category}</a
+          >
+        </small>
+        <h1 class="text-2xl font-bold">{title}</h1>
+        <p>
+          by <a href={`/author/${slugify(author)}`} class="text-lg underline"
+            >{author}</a
+          > · {formatDate(date)}
+        </p>
+      </div>
+      <Image
+        src={image.src}
+        alt={image.alt}
+        width={1500}
+        height={600}
+        format={"avif"}
+        fit={"cover"}
+        quality={80}
+        aspectRatio={"5:2"}
+        class="shadow-xl shadow-indigo-300"
+      />
+    </header>
+    <div class="mt-12 flex flex-row p-52 pt-0">
+      <div class="space-y-2 text-2xl">
+        <slot />
+      </div>
+
+      <aside
+        class="flex min-w-[20%] flex-col space-y-4"
+        aria-label="Blog Categorys"
+      >
+        <div>
+          <h2 class="text-3xl font-bold">Blog Categories</h2>
+          <CategoryCloud showCount={true} />
+        </div>
+
+        <RelatedPosts currentPost={frontmatter} />
+      </aside>
+    </div>
+  </section>
+</MainLayout>

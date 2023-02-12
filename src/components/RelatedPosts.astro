@@ -1,0 +1,43 @@
+---
+import { formatBlogPosts, formatDate, slugify } from "../js/utils";
+
+const { currentPost } = Astro.props;
+
+const allPosts = await Astro.glob("../pages/blog/*.md");
+const formattedPosts = formatBlogPosts(allPosts);
+
+const relatedPosts = formattedPosts.reduce((acc, post) => {
+  if (currentPost.title === post.frontmatter.title) {
+    return acc;
+  }
+
+  if (currentPost.category === post.frontmatter.category) {
+    acc.push(post);
+  }
+
+  return acc;
+}, []);
+---
+
+{
+  relatedPosts.length > 0 && (
+    <div>
+      <h2 class="text-3xl font-bold">Related Posts</h2>
+      <ul class="mt-2 flex">
+        {relatedPosts.map((post) => (
+          <li class="flex flex-col items-center space-y-1 rounded-lg bg-white p-2">
+            <h3 class="text-2xl font-bold">
+              <a href={post.url}>{post.frontmatter.title}</a>
+            </h3>
+            <small class="text-sm">
+              <a href={`/author/${slugify(post.frontmatter.author)}/`}>
+                {post.frontmatter.author}
+              </a>{" "}
+              · {formatDate(post.frontmatter.date)}
+            </small>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}

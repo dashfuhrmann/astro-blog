@@ -1,0 +1,48 @@
+---
+import { Image } from "@astrojs/image/components";
+import { slugify, formatDate } from "../js/utils";
+import Link from "./Link.astro";
+const { post, tagType } = Astro.props;
+
+const Tag = tagType;
+
+const { title, date, author, image, description, category } = post.frontmatter;
+---
+
+<article class="flex min-h-[470px] flex-col space-y-2 bg-white p-6">
+  <small>
+    <a
+      href={`/category/${slugify(category)}`}
+      class="max-w-fit rounded-md bg-black p-2 text-lg text-white">{category}</a
+    >
+  </small>
+  <a href={post.url} tabindex="-1">
+    <Image
+      src={image.src}
+      alt={image.alt}
+      width={1500}
+      height={600}
+      format={"avif"}
+      fit={"cover"}
+      quality={80}
+      aspectRatio={"5:2"}
+      class="shadow-xl shadow-indigo-300"
+    />
+  </a>
+  <div class="flex flex-col space-y-2">
+    <div>
+      <Tag class="text-2xl font-bold"><a href={post.url}>{title}</a></Tag>
+      <small>
+        by <a href={`/author/${slugify(author)}`} class="text-lg underline"
+          >{author}</a
+        > · {formatDate(date)}
+      </small>
+    </div>
+    <p>{description}</p>
+    <Link
+      href={post.url}
+      text="Read Post"
+      classes="bg-blue-900 rounded-md max-w-fit p-2 text-lg text-white"
+    />
+  </div>
+</article>
