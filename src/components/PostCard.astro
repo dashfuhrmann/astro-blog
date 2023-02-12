@@ -2,11 +2,11 @@
 import { Image } from "@astrojs/image/components";
 import { slugify, formatDate } from "../js/utils";
 import Link from "./Link.astro";
-const { post, tagType } = Astro.props;
+const { data, tagType, url } = Astro.props;
 
 const Tag = tagType;
 
-const { title, date, author, image, description, category } = post.frontmatter;
+const { title, date, author, image, description, category } = data;
 ---
 
 <article class="flex min-h-[470px] flex-col space-y-2 bg-white p-6">
@@ -16,7 +16,7 @@ const { title, date, author, image, description, category } = post.frontmatter;
       class="max-w-fit rounded-md bg-black p-2 text-lg text-white">{category}</a
     >
   </small>
-  <a href={post.url} tabindex="-1">
+  <a href={`/blog/${url}/`} tabindex="-1">
     <Image
       src={image.src}
       alt={image.alt}
@@ -31,7 +31,9 @@ const { title, date, author, image, description, category } = post.frontmatter;
   </a>
   <div class="flex flex-col space-y-2">
     <div>
-      <Tag class="text-2xl font-bold"><a href={post.url}>{title}</a></Tag>
+      <Tag class="text-2xl font-bold">
+        <a href={`/blog/${url}/`}>{title}</a>
+      </Tag>
       <small>
         by <a href={`/author/${slugify(author)}`} class="text-lg underline"
           >{author}</a
@@ -40,7 +42,7 @@ const { title, date, author, image, description, category } = post.frontmatter;
     </div>
     <p>{description}</p>
     <Link
-      href={post.url}
+      href={`/blog/${url}/`}
       text="Read Post"
       classes="bg-blue-900 rounded-md max-w-fit p-2 text-lg text-white"
     />

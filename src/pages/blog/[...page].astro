@@ -1,4 +1,5 @@
 ---
+import { getCollection, CollectionEntry } from "astro:content";
 import PostCard from "../../components/PostCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { formatBlogPosts } from "../../js/utils";
@@ -6,11 +7,15 @@ import Pagination from "../../components/Pagination.astro";
 import CategoryCloud from "../../components/CategoryCloud.astro";
 
 export async function getStaticPaths({ paginate }) {
-  const allPosts = await Astro.glob("./*.md");
-  const formattedPosts = formatBlogPosts(allPosts);
+  const allPosts = await getCollection("blog");
+  const formattedPosts: CollectionEntry<"blog">[] = formatBlogPosts(allPosts);
   return paginate(formattedPosts, {
     pageSize: 2,
   });
+}
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
 }
 
 const { page } = Astro.props;
@@ -23,7 +28,7 @@ const { page } = Astro.props;
       {
         page.data.map((post) => (
           <div class=" p-4">
-            <PostCard post={post} tagType={"h2"} />
+            <PostCard data={post.data} url={post.slug} tagType={"h2"} />
           </div>
         ))
       }

@@ -1,11 +1,14 @@
 ---
+import { getCollection, CollectionEntry } from "astro:content";
 import Link from "../components/Link.astro";
 import PostCard from "../components/PostCard.astro";
 import { formatBlogPosts } from "../js/utils";
 import MainLayout from "../layouts/MainLayout.astro";
 
-const allPosts = await Astro.glob("./blog/*.md");
-const formattedPosts = formatBlogPosts(allPosts, { limit: 3 });
+const allPosts = await getCollection("blog");
+const formattedPosts: CollectionEntry<"blog">[] = formatBlogPosts(allPosts, {
+  limit: 3,
+});
 ---
 
 <MainLayout title="Main" description="Some meta information for main">
@@ -15,7 +18,7 @@ const formattedPosts = formatBlogPosts(allPosts, { limit: 3 });
       {
         formattedPosts.map((post) => (
           <div class=" max-w-[33%] p-4">
-            <PostCard post={post} tagType={"h3"} />
+            <PostCard data={post.data} url={post.slug} tagType={"h3"} />
           </div>
         ))
       }

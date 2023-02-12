@@ -1,30 +1,42 @@
 ---
+import { getCollection, CollectionEntry } from "astro:content";
+import Link from "../components/Link.astro";
+import { z } from "astro:content";
 import PostCard from "../../components/PostCard.astro";
 import { formatBlogPosts, slugify } from "../../js/utils";
 import MainLayout from "../../layouts/MainLayout.astro";
+import { collections } from "../../content/config";
 
 export async function getStaticPaths() {
-  const allPosts = await Astro.glob("../blog/*.md");
-  const formattedPosts = formatBlogPosts(allPosts);
+  const allPosts = await getCollection("blog");
+  const formattedPosts: CollectionEntry<"blog">[] = formatBlogPosts(allPosts);
   const allAuthors = [
-    ...new Set(formattedPosts.map((post) => post.frontmatter.author).flat()),
+    ...new Set(formattedPosts.map((post) => post.data.author).flat()),
   ];
 
   return allAuthors.map((author) => {
     const authorPosts = formattedPosts.filter(
-      (post) => post.frontmatter.author === author
+      (post) => post.data.author === author
     );
     return {
       params: { author: slugify(author) },
       props: {
-        authorName: slugify(author),
+        authorName: author,
         posts: authorPosts,
       },
     };
   });
 }
 
-const { author } = Astro.props;
+const schema = collections["blog"].schema;
+const author = schema.pick({ author: true });
+type Author = z.infer<typeof author>;
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+  authorName: Author;
+}
+
 const { posts, authorName } = Astro.props;
 ---
 
@@ -41,7 +53,7 @@ const { posts, authorName } = Astro.props;
       {
         posts.map((post) => (
           <div class=" max-w-[33%] p-4">
-            <PostCard post={post} tagType={"h2"} />
+            <PostCard data={post.data} url={post.slug} tagType={"h2"} />
           </div>
         ))
       }
