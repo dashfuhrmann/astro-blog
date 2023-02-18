@@ -25,7 +25,7 @@ const { showCount } = Astro.props;
     Object.entries(processedCategories).map(([key, val]) => (
       <li class="p-1">
         <a
-          class="rounded-lg bg-blue-900 py-1 px-2 text-center uppercase text-white"
+          class="bg-primary rounded-sm py-1 px-2 text-center uppercase text-white"
           href={`/category/${slugify(key)}/`}
         >
           {key} {showCount && `(${val})`}

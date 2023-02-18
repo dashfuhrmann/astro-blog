@@ -9,11 +9,12 @@ const Tag = tagType;
 const { title, date, author, image, description, category } = data;
 ---
 
-<article class="flex min-h-[470px] flex-col space-y-2 bg-white p-6">
+<article class="flex h-full flex-col space-y-2 bg-white p-6">
   <small>
     <a
       href={`/category/${slugify(category)}`}
-      class="max-w-fit rounded-md bg-black p-2 text-lg text-white">{category}</a
+      class="max-w-fit rounded-sm bg-primary p-2 text-lg text-white"
+      >{category}</a
     >
   </small>
   <a href={`/blog/${url}/`} tabindex="-1">
@@ -44,7 +45,7 @@ const { title, date, author, image, description, category } = data;
     <Link
       href={`/blog/${url}/`}
       text="Read Post"
-      classes="bg-blue-900 rounded-md max-w-fit p-2 text-lg text-white"
+      classes="bg-primary rounded-md max-w-fit p-2 text-lg text-white"
     />
   </div>
 </article>

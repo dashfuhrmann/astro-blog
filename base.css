@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --main: 215;
+  }
+}
+
 @layer components {
   .link[aria-current="page"] {
-    color: blue;
+    @apply text-indigo-600;
   }
 }

@@ -37,13 +37,13 @@ const { Content } = await post.render();
 >
   <section>
     <header
-      class="flex flex-col items-center justify-center space-y-4 p-16 text-center"
+      class="flex flex-col items-center justify-center space-y-4 text-center"
     >
       <div class="space-y-2">
         <small>
           <a
             href={`/category/${slugify(category)}`}
-            class="max-w-fit rounded-md bg-blue-900 p-2 text-lg text-white"
+            class="max-w-fit rounded-md bg-primary p-2 text-lg text-white"
             >{category}</a
           >
         </small>
@@ -66,16 +66,16 @@ const { Content } = await post.render();
         class="shadow-xl shadow-indigo-300"
       />
     </header>
-    <div class="mt-12 flex flex-row p-52 pt-0">
+    <div class="mt-12 flex flex-col p-16 pt-0 xl:flex-row">
       <div class="space-y-2 text-2xl">
         <Content />
       </div>
 
       <aside
-        class="flex min-w-[20%] flex-col space-y-4"
+        class="flex min-w-[25%] flex-row xl:flex-col"
         aria-label="Blog Categorys"
       >
-        <div>
+        <div class="p-4">
           <h2 class="text-3xl font-bold">Blog Categories</h2>
           <CategoryCloud showCount={true} />
         </div>
