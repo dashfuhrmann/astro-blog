@@ -1,4 +1,4 @@
-import MDX from "@mdx-scoped-runtime";
+import MDX from "mdx-scoped-runtime";
 import PropTypes from "prop-types";
 import BlockQuote from "./BlockQuote";
 

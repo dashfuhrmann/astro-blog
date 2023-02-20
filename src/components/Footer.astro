@@ -1,14 +1,12 @@
 ---
-import CMSLoader from "./CMSLoader";
 ---
 
 <footer class="w-full bg-white p-4 text-center shadow-xl shadow-indigo-300">
   <small
     >Copyright &copy <span id="copyright"></span> | All rights reserved!</small
   >
-  <CMSLoader client:only="react" />
 </footer>
-
+<script is:inline src="./CMSLoader.jsx"></script>
 <script is:inline>
   console.log("hej!");
   console.log("loaded!");
