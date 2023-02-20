@@ -18,6 +18,7 @@ collections: # A list of collections the CMS should be able to edit
           default: "$/layouts/post.astro",
         }
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Hero Image", name: "heroImage", widget: "image" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Body", name: "body", widget: "markdown" }
       - { label: "Tags", name: "tags", widget: "list" }
