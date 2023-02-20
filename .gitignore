@@ -24,4 +24,4 @@ pnpm-debug.log*
 .astro
 
 #
-.package-lock
+.package-lock.json
