@@ -6,22 +6,3 @@
     >Copyright &copy <span id="copyright"></span> | All rights reserved!</small
   >
 </footer>
-<script is:inline src="./CMSLoader.jsx"></script>
-<script is:inline>
-  console.log("hej!");
-  console.log("loaded!");
-
-  if (window.netlifyIdentity) {
-    window.netlifyIdentity.on("init", (user) => {
-      if (!user) {
-        window.netlifyIdentity.on("login", () => {
-          document.location.href = "/admin/";
-        });
-      }
-    });
-  }
-
-  document.querySelector("#copyright").textContent = new Date()
-    .getFullYear()
-    .toString();
-</script>
