@@ -15,8 +15,11 @@ module.exports = {
       colors: {
         primary: colors.indigo[900],
         secondary: colors.indigo[600],
+        light: colors.slate[900],
+        dark: colors.white,
       },
     },
   },
   plugins: [],
+  darkMode: "class",
 };

@@ -14,12 +14,35 @@ const { title, description, image, data, robots } = Astro.props;
     data={data}
     robots={robots}
   />
-  <body class="flex h-screen w-full flex-col justify-between bg-gray-200">
+  <body
+    class="flex h-screen w-full flex-col justify-between bg-light dark:bg-dark"
+  >
     <Nav />
     <div class="mb-auto p-20">
       <slot />
     </div>
 
     <Footer />
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+      } else {
+        document.documentElement.classList.add("dark");
+      }
+      window.localStorage.setItem("theme", theme);
+    </script>
   </body>
 </html>

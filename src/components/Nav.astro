@@ -1,6 +1,7 @@
 ---
 import { Icon } from "astro-icon";
 import Link from "../components/Link.astro";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 interface INavItem {
   name: string;
@@ -21,20 +22,21 @@ const navData: INavItem[] = [
 
 <nav>
   <div
-    class="max-w-1500 flex w-full justify-between bg-white p-4 align-middle shadow-xl shadow-indigo-300"
+    class="max-w-1500 flex w-full justify-between border-b border-slate-500 bg-light p-4 align-middle dark:border-slate-50/60 dark:bg-dark/90"
   >
-    <a href="/" aria-label="Go home"><Icon name="logomark" width="60" /></a>
+    <a href="/" aria-label="Go home" class="text-dark dark:text-light">Blog</a>
     <ul class="flex items-center space-x-6">
       {
         navData.map((item) => (
           <Link
             text={item.name}
             href={item.path}
-            classes="underline"
+            classes="text-dark dark:text-light"
             data-navlink
           />
         ))
       }
+      <ThemeSwitcher client:load />
     </ul>
   </div>
 </nav>
